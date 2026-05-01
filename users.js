@@ -1,22 +1,18 @@
-// routes/users.js
-// Handles all /users routes: GET all, GET by ID, POST, DELETE
 
 const express = require("express");
 const router = express.Router();
 const buildResponse = require("../utils/response");
 
-// In-memory user store
 let users = [];
 let nextId = 1;
 
-// GET /users — return all users
+
 router.get("/", (req, res) => {
   return res.status(200).json(
     buildResponse("Users fetched successfully", { users })
   );
 });
 
-// GET /users/:id — return a specific user (Bonus)
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const user = users.find((u) => u.id === id);
@@ -28,18 +24,17 @@ router.get("/:id", (req, res) => {
   return res.status(200).json(buildResponse("User fetched successfully", { user }));
 });
 
-// POST /users — add a new user
+
 router.post("/", (req, res) => {
   const { name, email } = req.body;
 
-  // Validate required fields
   if (!name || !email) {
     return res
       .status(400)
       .json(buildResponse("Name and email are required"));
   }
 
-  // Check for duplicate email
+
   const duplicate = users.find(
     (u) => u.email.toLowerCase() === email.toLowerCase()
   );
@@ -57,7 +52,7 @@ router.post("/", (req, res) => {
     .json(buildResponse("User created successfully", { user: newUser }));
 });
 
-// DELETE /users/:id — delete a user by ID
+
 router.delete("/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const index = users.findIndex((u) => u.id === id);
