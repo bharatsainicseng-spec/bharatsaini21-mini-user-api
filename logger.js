@@ -1,5 +1,3 @@
-// middleware/logger.js
-// Logs every incoming request with timestamp, method, and URL
 
 const logger = (req, res, next) => {
   const currentTime = new Date().toISOString();
